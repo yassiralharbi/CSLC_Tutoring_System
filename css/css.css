@@ -1,0 +1,21 @@
+
+body {font:12px Tahoma;margin:0px;text-align:center;background:#FFF;}
+a:link,a:visited {font-size:12px;text-decoration: none;}
+a:hover{}
+
+#container {width:1200px;height:auto;align:center;margin:10px auto;}
+
+#header {}
+#menu {padding:20px 20px 0 0}
+#menu ul {list-style:none;margin:0px;}
+#menu ul li {float:left;display:block;line-height:30px;margin:15px;}
+#menu ul li a:link,#menu ul li a:visited {font-weight:bold;color:#666;font-size: 15px;}
+#menu ul li a:hover{}
+.menuDiv {width:1px;height:28px;background:#999}
+#banner {width:auto;margin:auto;border-bottom:10px solid #000fff;clear:both}
+#bar {width:auto;margin:auto;border-bottom:10px solid #FF890A;clear:both}
+#sepline {width:auto;margin:auto;border-bottom:10px solid #000000;clear:both}
+#main {width:800px;margin:0 auto;height:400px;text-align:center;font-size: 30px;}
+#content {width:auto;margin:0 auto;height:auto;text-align:center;font-size: 15px;}
+#footer {width:auto;margin:0 auto;height:10px;background:#FF890A;}
+

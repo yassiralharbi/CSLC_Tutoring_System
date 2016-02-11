@@ -1,0 +1,16 @@
+.multicheckbox-container.multicheckbox-wrap-container {
+  overflow: auto;
+  border: 1px solid #c0c0c0;
+  max-height: 100px;
+}
+
+.multicheckbox-wrap-container label {
+  padding-left: 3px;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+.multicheckbox-wrap-container .multicheckbox-on {
+  background-color: #3399ff;
+  color: white;
+}
