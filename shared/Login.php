@@ -36,20 +36,14 @@ else
     if ($type=='tutor')
     {
         header ("Refresh:0; URL =../tutors/TutorProfile.php");
-
     }
     else
     {
-
         if ($type=='admin')
         {
             header ("Refresh:0; URL =../admin/admin_home.php");
         }
-
-
     }
-
-
 }
 
 ?>

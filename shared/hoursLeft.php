@@ -8,14 +8,10 @@
 -->
 
 <?php
-/*session_start();
-
-$connect = connect();*/
 include("authentication.php");
 $semesterHours = 0;
 $counter = 0;
 $hoursLeft = 0;
-
 $sql = "SELECT * FROM semesterHours";
 $query = mysql_query($sql);
 $row = mysql_fetch_object($query);
@@ -34,7 +30,6 @@ $hoursLeft = $semesterHours - $counter;
 $hoursLeft=sanitize($hoursLeft);
 
 mysql_query("UPDATE semesterHours SET hours_left = '$hoursLeft'");
-
 $query = mysql_query($sql);
 
 ?>

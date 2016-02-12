@@ -74,9 +74,6 @@ while($row = mysql_fetch_object($query))
 
         echo"Units deleted";
         include("../shared/hoursLeft.php");
-        header("Refresh: 1; URL=workHourManagement.php");
-        exit;
     }
 }
-mysql_close($connect);
 ?>

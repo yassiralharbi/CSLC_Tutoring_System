@@ -27,7 +27,7 @@
 
 <?php
 session_start();
-$username= $_SERVER["REMOTE_USER"];
+$username= $_SESSION['user'];
 include("../shared/db.php");
 
 $connect = connect();

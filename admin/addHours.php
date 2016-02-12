@@ -70,11 +70,8 @@ while($row = mysql_fetch_object($query))
         if(!mysql_query("UPDATE hours SET h_Left='$hoursLeft' where tutor_Id='$tutorId'"))
             die(mysql_error());
 
-        //echo"Working hour units added";
         echo"units added";
         include("../shared/hoursLeft.php");
-        header("Refresh: 0; URL=../admin/workHourManagement.php");
-        exit;
     }
 }
 mysql_close($connect);

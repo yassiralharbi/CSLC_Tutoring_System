@@ -13,24 +13,24 @@
  *
  */
 session_start();
-$adminID = $_SERVER["REMOTE_USER"];
+$adminID = $_SESSION['user'];
 
 include("../shared/db.php");
-
 include("../admin/adminauthentication.php");
 include("../header&footer/admin_head.html");
 
 $connect = connect();
 
-
 $sql = "SELECT * FROM Admins WHERE admin_id = '$adminID'";
 $query = mysql_query($sql);
 $row = mysql_fetch_assoc($query);
 
-if (mysql_num_rows($query) == 0) {
+if (mysql_num_rows($query) == 0)
+{
     echo "Admin does not exist!";
 }
-else {
+else
+{
     $senderName = $row['FirstName'] . " " . $row['LastName'];
 }
 
@@ -90,7 +90,7 @@ else {
 
         }
         /* redirect to tutor contact page */
-        header("Refresh: 3; URL=tutorContact.php");
+        header("Refresh: 1; URL=tutorContact.php");
         exit();
     }
 

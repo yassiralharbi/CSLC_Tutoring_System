@@ -17,9 +17,8 @@
     include("../header&footer/header.html");
     include("../header&footer/admin_head.html");
     include("../shared/db.php");
-    $username= $_SERVER["REMOTE_USER"];
+    $username= $_SESSION['user'];
     $connect = connect();
-
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -44,6 +43,9 @@
                 padding:10px;
             }
         </style>
+    </div>
+</div>
+</body>
 </head>
 
 <body class="oneColElsCtrHdr">
@@ -72,8 +74,6 @@
                      <?php
                          $con=connect();
                          $result = mysql_query("SELECT * FROM tutors WHERE hired  = 'YES'");
-                         //$result = sanitize($result);
-                     //echo '<button type="button" id="checkAll" class="check-all">Select All</button>';
 
                      echo '<input type="checkbox" id="selecctAll"/> Selecct/Unselect All<br />';
                      while ($row = mysql_fetch_array($result)) {

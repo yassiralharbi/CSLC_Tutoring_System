@@ -8,23 +8,16 @@
  */
     session_start();
     include("../shared/db.php");
-   include "../header&footer/header.html";
-
+    include "../header&footer/header.html";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <script src="../js/jquery.min.js"></script>
     <script src="../js/jquery.validate.js"></script>
-
-
-
-
 </head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!-- TemplateBeginEditable name="doctitle" -->
 <title>Register New Tutors</title>
-
 
 <?php
 if(isset($_GET['postback'])&&$_GET['postback']!="")
@@ -33,9 +26,7 @@ if(isset($_GET['postback'])&&$_GET['postback']!="")
     $postback = implode(",",$postback);
     $postback = explode(",",$postback);
 }
-
 ?>
-
 
 <form action="TutorSignUp_do.php" method="POST" enctype="multipart/form-data">
 <table>
@@ -60,7 +51,6 @@ if(isset($_GET['postback'])&&$_GET['postback']!="")
             <?php
             $con=connect();
             $result = mysql_query("SELECT * FROM Languages ");
-
 
             while($row = mysql_fetch_array($result))
             {

@@ -9,12 +9,11 @@
 <?php
 session_start();
 include("../shared/db.php");
-
 include "../admin/adminauthentication.php";
 include "../header&footer/header.html";
-
 include "../header&footer/admin_head.html";
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,30 +22,26 @@ include "../header&footer/admin_head.html";
     <link href="../css/css.css" rel="stylesheet" type="text/css" media="all" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <script src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/table.css" media="screen" />
-
 </head>
-
 
 <body >
 <div class="container">
 
     <div class="row">
         <div class="col-sm-4">
-
             <?php
-
             $connect = connect();
-            $admin_id=$_SERVER["REMOTE_USER"];
+            $admin_id=$_SESSION['user'];
             date_default_timezone_set('Australia/Adelaide');
-            $sql = "SELECT * FROM `Admins` WHERE `admin_id` = '$admin_id'";
-            $query = mysql_query($sql);
-            $iipp=$_SERVER["REMOTE_ADDR"];
 
+            $sql = "SELECT * FROM `admins` WHERE `admin_id` = '$admin_id'";
+            $query = mysql_query($sql);
             $row = mysql_fetch_object($query);
+
+            $ip=$_SERVER["REMOTE_ADDR"];
 
             echo "<table style=width:30% >";
             echo "<tr>";
@@ -59,46 +54,18 @@ include "../header&footer/admin_head.html";
             echo "</tr>" ;
             echo "</tr>";
             echo "<td><h5><b>Current IP</b></td></h5>";
-            echo "<td><h5> $iipp</h5></td>";
+            echo "<td><h5> $ip</h5></td>";
             echo "</tr>" ;
             echo "</tr>";
             echo "<td><h5><b>Login Time</b></td></h5>";
-
             echo "<td><h5>".date('d-m-Y H:i:s',time())."</h5></td>";
             echo "</tr>" ;
             echo "</table>";
-
             echo " <html><div><iframe src='lang_notefication.php' width='400' frameborder=0 height='100%'align='left'></iframe>
 </div></html>";
-
-           // $sql = "SELECT * FROM `events`WHERE Dismiss = 'No'";
-           // $query = mysql_query($sql);
-
-
-            //if (mysql_num_rows($query) == 0)
-           // {
-           //     echo "No records found";
-           // }
-
-          //  else
-           // {
-                //while($row = mysql_fetch_object($query))
-                //{
-                    //echo "<tr>";
-                   // echo "<td><h5>" . $row->StudFname . " " . $row->StudLname . "</h5></td>";
-                   // echo "<td><h5>" . $row->date_time1 . " </h5></td>";
-
-                   // echo "<td>";
-                   // echo "<a href='adminHomeJobDetail.php?jobId=" . $row->event_Id . "'><h5>view</h5></a>";
-                   // echo "</td>";
-                    //echo "</tr>";
-               // }
-           // }
-
-
-
             ?>
         </div>
+
         <div class="col-sm-4">
             <?php
             $con=connect();
@@ -137,15 +104,15 @@ include "../header&footer/admin_head.html";
                     $counter[6]++;
             }
             for($i=0;$i<count($len);$i++){
-                if($nums[$i]!='Object Oriented Programming'&&$nums[$i]!='Scientific Computing'&&$nums[$i]!='Introduction to Programming for Engineers'&&$nums[$i]!='Web and Database Computing'&&$nums[$i]!='Algorithm and Data Structure Design'&&$nums[$i]!='Foundations of Computer Science')
+                if($nums[$i]=='Computer System')
                     $counter[7]++;
             }
-
-
-
-
+            for($i=0;$i<count($len);$i++){
+                if($nums[$i]!='Object Oriented Programming'&&$nums[$i]!='Scientific Computing'&&$nums[$i]!='Introduction to Programming for Engineers'&&$nums[$i]!='Web and Database Computing'&&$nums[$i]!='Algorithm and Data Structure Design'&&$nums[$i]!='Foundations of Computer Science'&&$nums[$i]!='Computer System')
+                    $counter[8]++;
+            }
             ?>
-            <br></br>
+          <br/>
                 <meta charset='UTF-8'>
                 <title>ichartjs designer</title>
                 <script src='../js/ichart.latest.min.js'></script>
@@ -158,6 +125,7 @@ include "../header&footer/admin_head.html";
                     var f=<?=$counter[5]?>;
                     var g=<?=$counter[6]?>;
                     var h=<?=$counter[7]?>;
+                    var i=<?=$counter[8]?>;
                     //document.write(a);
                     $(function(){
                         var chart = iChart.create({
@@ -271,29 +239,23 @@ include "../header&footer/admin_head.html";
                                     value:g,
                                     color:"rgba(100,139,191,0.90)"
                                 },{
-                                    name:"Other",
+                                    name:"CS",
                                     value:h,
+                                    color:"rgba(100,139,191,0.90)"
+                                },{
+                                    name:"Other",
+                                    value:i,
                                     color:"rgba(100,139,91,0.90)"
                                 }
                             ]
                         });
                         chart.draw();
-
                     });
                 </script>
-
-
             <td><div id='ichart-render'></div></td>
-
-
-
-
         </div>
-
     </div>
 </div>
-
-
 
 </div>
 <div id='bar'></div>
