@@ -150,12 +150,14 @@ $connect = connect();
                     $email = $row->email;
                     $phone = $row->phone;
                     $lan[0];
-                    $hours = $row->total_H;
+                    $sql3 = "SELECT h_Used from hours where tutor_Id = '$username'";
+                    $query3 = mysql_query($sql3);
+                    $row = mysql_fetch_object($query3);
+                    $hours = $row->h_Used/2;
                     /* show default Hours Done as 0 if the tutor has not been allocated work hours or has not done any */
                     if (is_null($hours)) {
                         $hours = "0";
                     }
-
                 }
             }
             mysql_close($connect);

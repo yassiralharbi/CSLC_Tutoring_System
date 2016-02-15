@@ -18,11 +18,12 @@ $connect = connect();
 
 $hoursToDelete = isset($_POST['hoursDeleted']) ? trim($_POST['hoursDeleted']) : '';
 
-if($hoursToDelete == "") $error[]=urlencode("Please enter a Number.");
+if($hoursToDelete == "")
+{
+    $error[]=urlencode("Please enter a Number.");
+}
 
-$tutorId = $_POST["tutorId"];
-$tutorId = getCheck($tutorId);
-$tutorId=sanitize($tutorId);
+$tutorId = sanitize(getCheck($_POST["tutorId"]));
 
 if($hoursToDelete <= 0)
 {
@@ -46,34 +47,15 @@ if($newHoursLeft < 0)
     exit;
 }
 
-$sql = "SELECT * FROM hours";
-$query = mysql_query($sql);
+$totalHours = sanitize($row->total_H - $hoursToDelete);
+$hoursLeft = sanitize($row->h_Left - $hoursToDelete);
 
-$flag = 0;
-$counter = 0;
-$sql = "SELECT * FROM hours";
-$query = mysql_query($sql);
-while($row = mysql_fetch_object($query))
-{
-    $counter++;
-    if($row->tutor_Id == $tutorId)
-    {
-        $flag++;
+if(!mysql_query("UPDATE hours SET total_H='$totalHours' where tutor_Id='$tutorId'"))
+    die(mysql_error());
 
-        $totalHours = $row->total_H - $hoursToDelete;
-        $totalHours=sanitize($totalHours);
+if(!mysql_query("UPDATE hours SET h_Left='$hoursLeft' where tutor_Id='$tutorId'"))
+    die(mysql_error());
 
-        $hoursLeft = $row->h_Left - $hoursToDelete;
-        $hoursLeft=sanitize($hoursLeft);
-
-        if(!mysql_query("UPDATE hours SET total_H='$totalHours' where tutor_Id='$tutorId'"))
-            die(mysql_error());
-
-        if(!mysql_query("UPDATE hours SET h_Left='$hoursLeft' where tutor_Id='$tutorId'"))
-            die(mysql_error());
-
-        echo"Units deleted";
-        include("../shared/hoursLeft.php");
-    }
-}
+echo $hoursToDelete." Units deleted";
+include("../shared/hoursLeft.php");
 ?>

@@ -11,9 +11,7 @@
 <?php
 session_start();
 
-$username= $_SERVER["REMOTE_USER"];
-
-//$username=sanitize($username);
+$username= $_SESSION['user'];
 
 include("../shared/db.php");
 include("../header&footer/header.html");
@@ -33,10 +31,6 @@ $connect = connect();
 <body class="oneColElsCtrHdr">
 <div id="mainContent">
 
-    <?php
-    $connect = connect();
-
-    echo"<html>
 	<title>Jobs</title>
 	</head>
 	<body>
@@ -50,61 +44,64 @@ $connect = connect();
 	<td><h5>Meeting Place</h5></td>
 	<td><h5>Details</h5></td>
 	<td><h5>Accept</h5></td>
-	<tr>";
+	</tr>
 
-    $tutorId = $username;
-    $tutorId=sanitize($tutorId);
-    $result = mysql_query("SELECT language FROM teaching WHERE `tutor_Id` = '" . $tutorId."'");
+        <?php
+            $tutorId = sanitize($username);
+            $sql = "SELECT language FROM applicant_language WHERE `tutor_Id` = '$tutorId'";
+            $result = mysql_query($sql);
 
-    while (list($n) = mysql_fetch_row($result))
-    {
-        $languages[]=$n;
-    }
-
-    $len = count($languages);
-
-    date_default_timezone_set('Australia/Adelaide');
-    $localeTime = date('Y-m-d H:i:s',time());
-
-    for($i = $len-1;$i >= 0;$i--)
-    {
-        $sql="SELECT * FROM events WHERE language =  '" . $languages[$i] ."'";
-        $query = mysql_query($sql);
-
-        while($row = mysql_fetch_object($query))
-        {
-            $time = $row->date_time1;
-
-            if(strtotime($time)<=strtotime($localeTime))
+            while (list($n) = mysql_fetch_row($result))
             {
-                $eventId = $row->event_Id;
-                $firstName = $row->StudFname;
-                $lastName = $row->StudLname;
-                $email = $row->Studemail;
-                $mobile = $row->Studmobile;
-                $time = $row->date_time1;
-                $otherClass = $row->other_class;
-                $topic = $row->topic;
-                $place = $row->location;
-                $class = $row->class;
-                $language = $row->language;
-                $tutorId = $row->tutor_Id;
-                $comment = $row->comments;
-
-                $sql = "INSERT INTO `booking-history` (`stud_f_name`, `stud_L_name`,`Studemail`,`Studmobile`,`language`,`Time`,`other_class`,`topic`,`place`,`class`,`comments`,`tutor_Id`) VALUES ('$firstName','$lastName','$email','$mobile','$language','$time','$otherClass','$topic','$place','$class','$comment','$tutorId')";
-                $query = mysql_query($sql);
-
-                $sql = "DELETE FROM `events` WHERE `event_Id`  = '" .$eventId . "'";
-                $query = mysql_query($sql);
+                $languages[]=$n;
             }
-            else
+
+            $len = count($languages);
+
+            date_default_timezone_set('Australia/Adelaide');
+            $localeTime = date('Y-m-d H:i:s',time());
+
+            for($i = $len-1;$i >= 0;$i--)
             {
-                echo "<tr>";
-                echo "<td>" .$row->StudFname ,' ', $row->StudLname."</td>";
-                echo "<td>" .$row->language."</td>";
-                echo "<td>" .$row->date_time1."</td>";
-                echo "<td>" .$row->location."</td>";
-              ?>
+                $sql="SELECT * FROM events WHERE language =  '" . $languages[$i] ."'";
+                $query = mysql_query($sql);
+
+                while($row = mysql_fetch_object($query))
+                {
+                    $time = $row->date_time1;
+                    $date = str_replace('/','-',substr($time,0,10));
+                    $minute = str_replace('.',':',substr($time,-5,strlen($time)));
+                    $time = $date.$minute;
+
+                    if(strtotime($time)<=strtotime($localeTime))
+                    {
+                        $eventId = $row->event_Id;
+                        $firstName = $row->StudFname;
+                        $lastName = $row->StudLname;
+                        $email = $row->Studemail;
+                        $mobile = $row->Studmobile;
+                        $otherClass = $row->other_class;
+                        $topic = $row->topic;
+                        $place = $row->location;
+                        $class = $row->class;
+                        $language = $row->language;
+                        $tutorId = $row->tutor_Id;
+                        $comment = $row->comments;
+
+                        $sql = "INSERT INTO `booking-history` (`stud_f_name`, `stud_L_name`,`Studemail`,`Studmobile`,`language`,`Time`,`other_class`,`topic`,`place`,`class`,`comments`,`tutor_Id`) VALUES ('$firstName','$lastName','$email','$mobile','$language','$time','$otherClass','$topic','$place','$class','$comment','$tutorId')";
+                        $query = mysql_query($sql);
+
+                        $sql = "DELETE FROM `events` WHERE `event_Id`  = '" .$eventId . "'";
+                        $query = mysql_query($sql);
+                    }
+                    else
+                    {
+                        echo "<tr>";
+                        echo "<td>" .$row->StudFname ,' ', $row->StudLname."</td>";
+                        echo "<td>" .$row->language."</td>";
+                        echo "<td>" .$row->date_time1."</td>";
+                        echo "<td>" .$row->location."</td>";
+                        ?>
 
                 <form id='JobDetail' method='POST' action='JobDetail.php'>
                     <td>
@@ -130,15 +127,11 @@ $connect = connect();
 
     mysql_close($connect);
     ?>
-    <html>
     </div>
     <div class="pageFooter">
-
         <span style="font-size:20px ; " ><br/> <a href="../shared/Logoff.php">SignOut Here</a></span>
-
     </div>
     <div id='banner'></div>
-    </html>
 </html>
 <?php
 include "../header&footer/footer.html";

@@ -27,7 +27,7 @@ while($row = mysql_fetch_object($query))
 }
 
 $hoursLeft = $semesterHours - $counter;
-$hoursLeft=sanitize($hoursLeft);
+$hoursLeft = sanitize($hoursLeft);
 
 mysql_query("UPDATE semesterHours SET hours_left = '$hoursLeft'");
 $query = mysql_query($sql);

@@ -10,7 +10,7 @@
 
 <?php
 session_start();
-$username= $_SERVER["REMOTE_USER"];
+$username= $_SESSION['user'];
 //$username=sanitize($username);
 
 include("../shared/db.php");
@@ -18,7 +18,6 @@ include("../header&footer/header.html");
 include("../header&footer/head.html");
 include("../tutors/userauthentication.php");
 $connect = connect();
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -52,10 +51,11 @@ $connect = connect();
 	<tr>";
 
     $tutorId = $username;
-    $tutorId=sanitize($tutorId);
+    $tutorId = sanitize($tutorId);
     include("../shared/updateBooking.php");
-    $tutorId=sanitize($tutorId);
-    $query = mysql_query("SELECT * FROM `job-Booked` WHERE `tutor_Id` = '" .$tutorId. "'");
+    $tutorId = sanitize($tutorId);
+    $sql = "SELECT * FROM `job-Booked` WHERE `tutor_Id` = '" .$tutorId. "'";
+    $query = mysql_query($sql);
 
     if (mysql_num_rows($query) == 0)
     {

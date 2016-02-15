@@ -18,9 +18,7 @@ $hoursAdded = isset($_POST['hoursAdded']) ? trim($_POST['hoursAdded']) : '';
 
 if($hoursAdded == "") $error[]=urlencode("Please enter a Number.");
 
-$tutorId = $_POST["tutorId"];
-$tutorId = getCheck($tutorId);
-$tutorId=sanitize($tutorId);
+$tutorId = sanitize(getCheck($_POST["tutorId"]));
 
 if($hoursAdded <= 0)
 {
@@ -44,35 +42,21 @@ if($newHoursLeftBank < 0)
     exit;
 }
 
-$sql = "SELECT * FROM hours";
+$sql = "SELECT * FROM hours WHERE tutor_id='$tutorId'";
 $query = mysql_query($sql);
+$row = mysql_fetch_object($query);
 
-$flag = 0;
-$counter = 0;
+$totalHours = sanitize($row->total_H + $hoursAdded);
+$hoursLeft = sanitize($row->h_Left + $hoursAdded);
 
-$sql = "SELECT * FROM hours";
-$query = mysql_query($sql);
-while($row = mysql_fetch_object($query))
-{
-    $counter++;
-    if($row->tutor_Id == $tutorId)
-    {
-        $flag++;
+if(!mysql_query("UPDATE hours SET total_H='$totalHours' where tutor_Id='$tutorId'"))
+    die(mysql_error());
 
-        $totalHours = $row->total_H + $hoursAdded;
-        $totalHours=sanitize($totalHours);
-        $hoursLeft = $row->h_Left + $hoursAdded;
-        $hoursLeft=sanitize($hoursLeft);
+if(!mysql_query("UPDATE hours SET h_Left='$hoursLeft' where tutor_Id='$tutorId'"))
+    die(mysql_error());
 
-        if(!mysql_query("UPDATE hours SET total_H='$totalHours' where tutor_Id='$tutorId'"))
-            die(mysql_error());
+echo $hoursAdded." units added";
+include("../shared/hoursLeft.php");
 
-        if(!mysql_query("UPDATE hours SET h_Left='$hoursLeft' where tutor_Id='$tutorId'"))
-            die(mysql_error());
-
-        echo"units added";
-        include("../shared/hoursLeft.php");
-    }
-}
 mysql_close($connect);
 ?>

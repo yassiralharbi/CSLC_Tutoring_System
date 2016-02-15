@@ -18,7 +18,9 @@ $query = mysql_query($sql);
 while($row = mysql_fetch_object($query))
 {
     $time = $row->Time;
-    $time = sanitize($time);
+    $date = str_replace('/','-',substr($time,0,10));
+    $minute = str_replace('.',':',substr($time,-5,strlen($time)));
+    $time = sanitize($date.$minute);
     if(strtotime($time)<=strtotime($localeTime))
     {
         $bookId = $row->book_Id;
@@ -39,9 +41,6 @@ while($row = mysql_fetch_object($query))
         $mobile = $row->Studmobile;
         $mobile = sanitize($mobile);
 
-        $time = $row->Time;
-        $time = sanitize($time);
-
         $otherClass = $row->other_class;
         $otherClass = sanitize($otherClass);
 
@@ -56,9 +55,6 @@ while($row = mysql_fetch_object($query))
 
         $language = $row->language;
         $language = sanitize($language);
-
-        $tutorId = $row->tutorId;
-        $tutorId = sanitize($tutorId);
 
         $comment = $row->comments;
         $comment = sanitize($comment);
