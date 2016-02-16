@@ -31,7 +31,7 @@ if (mysql_num_rows($query) == 1)
         $sql= "update hours set h_unclaimed='$hoursUnclaimed' where tutor_Id='$accept_Tutor'";
         mysql_query($sql) or die(mysql_error());
         include("../shared/hoursLeft.php");
-        header("Refresh: 1; URL=ViewJob.php");
+
     }
     else
     {

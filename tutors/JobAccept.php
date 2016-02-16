@@ -81,9 +81,8 @@ if (mysql_num_rows($query) == 1)
             include("jobAcceptMailer.php");
 
             include("acceptHours.php");
-            echo"Job Accepted";
-            //echo"<script>alert('Job Accepted');
-   			//echo"<script>window.top.location.href='acceptHours.php?value=".$accept_Tutor."'</script>";
+            echo " Job Accepted";
+            echo "<script type='text/javascript'>window.location.href='ViewBooking.php';</script>";
         }
     }
 }

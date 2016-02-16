@@ -101,8 +101,7 @@ header("Refresh: 3; URL=index.php");
 $id = mysql_insert_id($con);
 echo "<br/>";
 
-echo "<p1>Thank you for your booking. A CS tutor will be in contact with you shortly.</p1>";
-
+echo "<script type='text/javascript'>alert('Thank you for your booking. A CS tutor will be in contact with you shortly.');window.location.href='../index.php';</script>";
 mysql_close($con);
 
 include "../header&footer/footer.html";

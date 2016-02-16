@@ -95,9 +95,8 @@ if (mysql_num_rows($query) == 1)
             include("jobCancelMailer.php");
 
             include("cancelHours.php");
-            echo"Job Cancelled";
-            //echo"<script>alert('Job Deleted');
-   			//window.top.location.href='cancelHours.php?value='" . $delete_Tutor. "''</script>";
+            echo" Job Cancelled";
+            echo "<script type='text/javascript'>window.location.href='ViewJob.php';</script>";
         }
     }
 }
